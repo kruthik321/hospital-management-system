@@ -1,0 +1,27 @@
+flowchart TD
+    classDef default fill:#f9f9f9,stroke:#333,stroke-width:2px;
+    classDef admin fill:#ffebee,stroke:#c62828,stroke-width:2px;
+    classDef patient fill:#e3f2fd,stroke:#1565c0,stroke-width:2px;
+
+    Login(["System Login Gateway (JWT Middleware)"])
+
+    Login --> |Role == ADMIN| Admin
+    Login --> |Role == PATIENT| Patient
+
+    subgraph Admin ["⚙️ Admin Dashboard (Global System Control)"]
+        direction TB
+        A1["📈 Global Stat Cards<br>Shows total Revenue, Doctors, Patients"]:::admin
+        A2["👥 User Management<br>Create, Assign, and Remove Hospital Staff"]:::admin
+        A3["💸 Hospital Billing Overview<br>Track all payments across departments"]:::admin
+        A4["🏥 Infrastructure Controls<br>Manage Rooms, Beds, and Inventory levels"]:::admin
+    end
+
+    subgraph Patient ["🧑 Patient Dashboard (Personalized Care)"]
+        direction TB
+        P1["📅 Appointment Manager<br>Book new visits, view schedule"]:::patient
+        P2["🩺 My Medical Records<br>Download Lab Reports & Prescriptions"]:::patient
+        P3["💳 Personal Invoices<br>Pay personal outstanding bills directly"]:::patient
+        P4["🌟 Specialized Care Portals<br>Premium UI access to Kids & Pregnancy Hubs"]:::patient
+    end
+
+    Admin ~~~ Patient

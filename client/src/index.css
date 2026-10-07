@@ -1,0 +1,139 @@
+:root {
+  --primary: #1e3a8a; /* Deep Navy */
+  --primary-hover: #1e40af;
+  --secondary: #0d9488; /* Medical Teal */
+  --accent: #f59e0b;
+  --bg-soft: #f8fafc;
+  --sidebar: #0f172a;
+  --sidebar-hover: #1e293b;
+}
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  * { @apply box-border; }
+  body {
+    @apply bg-[#f8fafc] text-gray-900 font-sans;
+  }
+}
+
+@layer components {
+  .btn-primary {
+    @apply inline-flex items-center justify-center px-5 py-2.5 bg-blue-800 text-white font-medium rounded-lg
+    hover:bg-blue-900 focus:ring-4 focus:ring-blue-100 transition-all duration-300 
+    disabled:opacity-50 disabled:cursor-not-allowed text-sm gap-2 shadow-sm;
+  }
+  .btn-secondary {
+    @apply inline-flex items-center justify-center px-5 py-2.5 bg-white text-gray-700 font-medium rounded-lg
+    border border-gray-300 hover:bg-gray-50 focus:ring-4 focus:ring-gray-100 transition-all duration-200 text-sm gap-2;
+  }
+  .card {
+    @apply bg-white rounded-2xl border border-gray-100 shadow-sm hover:shadow-xl hover:-translate-y-1 transition-all duration-300;
+  }
+  .medical-header {
+    @apply relative h-64 rounded-[2.5rem] overflow-hidden mb-12 shadow-2xl bg-blue-900;
+  }
+  .medical-header-overlay {
+    @apply absolute inset-0 bg-gradient-to-t from-blue-900/95 via-blue-900/40 to-transparent flex flex-col justify-end p-10 text-white;
+  }
+  .medical-glass {
+    @apply backdrop-blur-md bg-white/80 border border-white/50 shadow-xl rounded-[2rem];
+  }
+  .input-field {
+    @apply w-full px-4 py-3 bg-gray-50 border border-gray-200 rounded-xl text-sm
+    focus:ring-2 focus:ring-blue-500 focus:border-blue-500 focus:bg-white outline-none transition-all duration-200;
+  }
+  .gradient-bg {
+    background: linear-gradient(135deg, #1e3a8a 0%, #3b82f6 50%, #0d9488 100%);
+  }
+  .sidebar-gradient {
+    background: linear-gradient(180deg, #0f172a 0%, #1e293b 100%);
+  }
+
+  /* Clinical DataTable Enhancements */
+  .table-container {
+    @apply medical-glass overflow-hidden border-none;
+  }
+  .data-table {
+    @apply w-full text-left border-collapse bg-white/40;
+  }
+  .data-table thead th {
+    @apply bg-blue-50/80 text-blue-900 font-black text-[10px] uppercase tracking-widest py-6 px-8 border-b border-blue-100/50;
+  }
+  .data-table tbody tr {
+    @apply border-b border-gray-100/50 transition-all duration-200 hover:bg-blue-50/50;
+  }
+  .data-table tbody td {
+    @apply py-6 px-8 text-sm text-gray-700 font-medium align-middle;
+  }
+  .data-table tbody tr:last-child {
+    @apply border-none;
+  }
+
+  /* Pagination Styling */
+  .pagination-btn {
+    @apply px-4 py-2 rounded-xl text-xs font-black uppercase tracking-widest transition-all active:scale-95 disabled:opacity-30;
+  }
+
+  /* Tab Components */
+  .medical-tabs {
+    @apply flex gap-2 p-1.5 bg-gray-100/50 rounded-2xl w-fit mb-10;
+  }
+  .medical-tab-item {
+    @apply px-8 py-3 rounded-xl text-[11px] font-black uppercase tracking-widest transition-all;
+  }
+  .medical-tab-active {
+    @apply bg-blue-800 text-white shadow-xl shadow-blue-800/20;
+  }
+  .medical-tab-inactive {
+    @apply text-gray-500 hover:bg-gray-200/50 hover:text-gray-900;
+  }
+
+  /* Dashboard Visuals */
+  .chart-gradient-navy { fill: url(#navyGradient); }
+  .chart-gradient-teal { fill: url(#tealGradient); }
+  .chart-gradient-rose { fill: url(#roseGradient); }
+
+  .dashboard-card { @apply bg-white rounded-[2.5rem] shadow-2xl shadow-blue-900/5 border border-white p-8 transition-all duration-500 hover:shadow-blue-900/10 hover:-translate-y-1; }
+  .clinical-list-item { @apply flex items-center justify-between p-5 rounded-[1.5rem] transition-all duration-300 hover:bg-blue-50/50 border border-transparent hover:border-blue-100/30; }
+  
+  .glass-panel { @apply bg-white/70 backdrop-blur-xl border border-white/40 shadow-2xl shadow-blue-900/5; }
+  
+  .pulse-medical { animation: pulse-medical 2s cubic-bezier(0.4, 0, 0.6, 1) infinite; }
+  @keyframes pulse-medical { 0%, 100% { opacity: 1; transform: scale(1); } 50% { opacity: .7; transform: scale(1.05); } }
+
+  /* Kids Portal Theme */
+  .theme-kids {
+    --primary: #38bdf8; /* Sky 400 */
+    --secondary: #fb7185; /* Rose 400 */
+    --accent: #fbbf24; /* Amber 400 */
+    --bg-portal: #f0f9ff;
+  }
+  .kids-card {
+    @apply bg-white rounded-[3rem] border-4 border-sky-100 shadow-xl shadow-sky-900/5 transition-all duration-500 hover:shadow-sky-900/10 hover:-translate-y-2;
+  }
+  .kids-gradient {
+    background: linear-gradient(135deg, #38bdf8 0%, #818cf8 100%);
+  }
+
+  /* Pregnancy Portal Theme */
+  .theme-pregnancy {
+    --primary: #fda4af; /* Rose 300 */
+    --secondary: #99f6e4; /* Teal 200 */
+    --accent: #c4b5fd; /* Violet 300 */
+    --bg-portal: #fff1f2;
+  }
+  .pregnancy-card {
+    @apply bg-white/60 backdrop-blur-md rounded-[2rem] border border-rose-100 shadow-lg shadow-rose-900/5 transition-all duration-700 hover:bg-white/90 hover:shadow-rose-900/10;
+  }
+  .pregnancy-gradient {
+    background: linear-gradient(135deg, #fda4af 0%, #fb7185 50%, #f43f5e 100%);
+  }
+}
+
+@layer utilities {
+  .scrollbar-hide::-webkit-scrollbar { display: none; }
+  .scrollbar-hide { -ms-overflow-style: none; scrollbar-width: none; }
+}

@@ -1,0 +1,22 @@
+sequenceDiagram
+    participant Client as Frontend (React)
+    participant Auth as Auth Route (/api/auth)
+    participant JWT as JWT Middleware
+    participant Protect as Protected Route (/api/profile)
+
+    Note over Client,Auth: Phase 1: Login Request (Issuing Token)
+    Client->>Auth: POST /login { email, password }
+    Auth->>Auth: Validate Bcrypt Hash from DB
+    Auth->>JWT: Request Token (payload: userId, role)
+    JWT-->>Auth: Signed JWT Token ('eyJhbGci...')
+    Auth-->>Client: 200 OK + JSON Token
+
+    Note over Client,Protect: Phase 2: Protected Route Access
+    Client->>Protect: GET /profile (Header: Authorization Bearer)
+    Protect->>JWT: Intercept & Verify Token Signature
+    alt Token Invalid / Expired
+        JWT-->>Client: 401 Unauthorized Response
+    else Token Valid
+        JWT-->>Protect: Token Valid (Decoded User Object)
+        Protect-->>Client: 200 OK (Protected DB Data)
+    end

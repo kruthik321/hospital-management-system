@@ -1,0 +1,23 @@
+flowchart TD
+    classDef default fill:#f9f9f9,stroke:#333,stroke-width:2px;
+    classDef post fill:#ffecb3,stroke:#ff8f00,stroke-width:2px;
+    classDef get fill:#e1bee7,stroke:#8e24aa,stroke-width:2px;
+    classDef data fill:#e8f5e9,stroke:#2e7d32,stroke-width:1px;
+
+    subgraph Test1 ["⚡ API TEST 1: User Login (Postman / Thunder Client)"]
+        direction LR
+        req1["POST http://localhost:5000/api/auth/login"]:::post
+        body1["Body (JSON):<br>{ 'email': 'admin@hospital.com',<br>'password': 'Admin@123' }"]:::data
+        res1["Response: 200 OK<br>Token: 'eyJhbGciOiJIUzI1Ni...'"]:::data
+        req1 --> body1 --> res1
+    end
+
+    subgraph Test2 ["⚡ API TEST 2: Fetch Appointments (Postman / Thunder Client)"]
+        direction LR
+        req2["GET http://localhost:5000/api/appointments"]:::get
+        head2["Headers:<br>Authorization: Bearer <JWT Token>"]:::data
+        res2["Response: 200 OK<br>Count: 2<br>[ { id: 101, status: 'SCHEDULED' } ]"]:::data
+        req2 --> head2 --> res2
+    end
+    
+    Test1 ~~~ Test2

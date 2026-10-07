@@ -1,0 +1,65 @@
+erDiagram
+    USER {
+        int id
+        string role
+    }
+    PATIENT {
+        int id
+        string name
+    }
+    DOCTOR {
+        int id
+        string specialization
+    }
+    NURSE {
+        int id
+        string shift
+    }
+    DEPARTMENT {
+        int id
+        string name
+    }
+    APPOINTMENT {
+        int id
+        date time
+    }
+    PRESCRIPTION {
+        int id
+        string notes
+    }
+    BILLING {
+        int id
+        float amount
+    }
+    LAB_ORDER {
+        int id
+        string status
+    }
+    ROOM {
+        int id
+        string type
+    }
+    BED {
+        int id
+        string status
+    }
+
+    USER ||--|| PATIENT : creates
+    USER ||--|| DOCTOR : creates
+    USER ||--|| NURSE : creates
+    
+    DEPARTMENT ||--o{ DOCTOR : employs
+    DEPARTMENT ||--o{ NURSE : employs
+    DEPARTMENT ||--o{ ROOM : contains
+    
+    PATIENT ||--o{ APPOINTMENT : books
+    DOCTOR ||--o{ APPOINTMENT : attends
+    
+    PATIENT ||--o{ PRESCRIPTION : receives
+    DOCTOR ||--o{ PRESCRIPTION : writes
+    
+    PATIENT ||--o{ BILLING : pays
+    
+    PATIENT ||--o{ LAB_ORDER : undergoes
+    
+    ROOM ||--o{ BED : holds

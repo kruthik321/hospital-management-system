@@ -1,0 +1,178 @@
+erDiagram
+    %% Core Identity & Access Module
+    Role ||--o{ User : "contains"
+    User ||--o{ AuditLog : "generates"
+    User ||--o{ Notification : "receives"
+    
+    %% Clinical Personnel & Patient Profiles
+    User ||--|| Patient : "is a"
+    User ||--|| Doctor : "is a"
+    User ||--|| Nurse : "is a"
+    User ||--|| Staff : "is a"
+    
+    %% Institutional Structure
+    Department ||--o{ Doctor : "employs"
+    Department ||--o{ Nurse : "employs"
+    Department ||--o{ Staff : "employs"
+    Department ||--o{ Room : "manages"
+    
+    %% Inpatient Management
+    Room ||--o{ Bed : "has"
+    Bed ||--o{ RoomAssignment : "reserved in"
+    Patient ||--o{ RoomAssignment : "occupies"
+    Patient ||--o{ Admission : "enters"
+    Admission ||--|| Discharge : "completes"
+    
+    %% Clinical Operations
+    Patient ||--o{ Appointment : "schedules"
+    Doctor ||--o{ Appointment : "attends"
+    Doctor ||--o{ DoctorSchedule : "follows"
+    Patient ||--o{ Vital : "provides"
+    Nurse ||--o{ Vital : "records"
+    Patient ||--o{ MedicalRecord : "owns"
+    Patient ||--o{ Diagnosis : "receives"
+    Doctor ||--o{ Diagnosis : "performs"
+    Diagnosis ||--o{ TreatmentPlan : "guides"
+    
+    %% Diagnostic & Pharmacy Services
+    Patient ||--o{ LabOrder : "undergoes"
+    Doctor ||--o{ LabOrder : "requests"
+    LabTest ||--o{ LabOrder : "defined by"
+    LabOrder ||--|| LabReport : "produces"
+    
+    Patient ||--o{ Prescription : "prescribed to"
+    Doctor ||--o{ Prescription : "writes"
+    Appointment ||--|| Prescription : "results in"
+    Prescription ||--o{ PrescriptionItem : "contains"
+    Medication ||--o{ PrescriptionItem : "dispensed as"
+    Medication ||--o{ Inventory : "stocked in"
+    Prescription ||--o{ PharmacyOrder : "fulfills"
+    
+    %% Financial & Support
+    Patient ||--o{ Billing : "billed to"
+    Appointment ||--|| Billing : "charges for"
+    Billing ||--o{ BillingItem : "breakdown"
+    Billing ||--o{ Payment : "settled by"
+    Patient ||--|| Insurance : "covered by"
+    Patient ||--o{ Feedback : "provides"
+    Doctor ||--o{ Feedback : "rated by"
+
+    %% Specialized Portals
+    User ||--o{ KidProfile : "registers (Parent)"
+    KidProfile ||--o{ KidVaccination : "undergoes"
+    Vaccination ||--o{ KidVaccination : "administered"
+    User ||--|| PregnancyProfile : "monitored (Patient)"
+    PregnancyProfile ||--o{ PregnancySymptomLog : "records"
+
+    %% Infrastructure & System
+    Role {
+        Int id PK
+        String name
+        String description
+    }
+    User {
+        Int id PK
+        String email
+        String first_name
+        String last_name
+        Int role_id FK
+    }
+    Patient {
+        Int id PK
+        Int user_id FK
+        String blood_group
+        String allergies
+    }
+    Doctor {
+        Int id PK
+        Int user_id FK
+        Int department_id FK
+        String specialization
+        Decimal consultation_fee
+    }
+    Nurse {
+        Int id PK
+        Int user_id FK
+        String shift_type
+        String ward_assignment
+    }
+    Department {
+        Int id PK
+        String name
+        String floor
+    }
+    Appointment {
+        Int id PK
+        Int patient_id FK
+        Int doctor_id FK
+        DateTime appointment_date
+        String status
+    }
+    Billing {
+        Int id PK
+        Int patient_id FK
+        Decimal net_amount
+        String status
+    }
+    Medication {
+        Int id PK
+        String name
+        Decimal price
+    }
+    Inventory {
+        Int id PK
+        Int medication_id FK
+        Int quantity
+    }
+    PharmacyOrder {
+        Int id PK
+        Int prescription_id FK
+        String status
+    }
+    LabOrder {
+        Int id PK
+        Int patient_id FK
+        Int labTest_id FK
+        String status
+    }
+    EmergencyCase {
+        Int id PK
+        Int patient_id FK
+        String severity
+    }
+    Equipment {
+        Int id PK
+        String name
+        String status
+    }
+    FAQ {
+        Int id PK
+        String question
+        String category
+    }
+    KidProfile {
+        Int id PK
+        Int parent_id FK
+        Int age
+    }
+    PregnancyProfile {
+        Int id PK
+        Int mother_id FK
+        Int pregnancy_week
+    }
+    SymptomDiseaseMap {
+        Int id PK
+        String symptom
+        String disease
+    }
+    SOP {
+        Int id PK
+        String title
+        String portal_type
+    }
+    AuditLog {
+        Int id PK
+        Int user_id FK
+        String action
+        String table_name
+    }

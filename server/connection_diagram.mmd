@@ -1,0 +1,27 @@
+sequenceDiagram
+    participant U as User (Browser)
+    participant F as Frontend (React + Vite)
+    participant P as Vite Proxy (Port 5173)
+    participant B as Backend API (Express on Port 5000)
+    participant DB as Database (PostgreSQL via Prisma)
+    
+    U->>F: Enters credentials & clicks Login
+    F->>P: POST /api/auth/login
+    P->>B: Routes request to Express backend
+    B->>DB: Prisma query: findUnique(email)
+    DB-->>B: Returns user record + hashed password
+    B->>B: Bcrypt validates password match
+    B-->>F: Returns 200 OK + JWT Token
+    F->>U: React Router updates view to Dashboard
+    
+    note over U,DB: Standard Data Fetching Flow
+    
+    loop Fetching Dashboard Data
+        F->>P: GET /api/data (with Bearer JWT)
+        P->>B: Routes request
+        B->>B: JWT Middleware acts as gatekeeper
+        B->>DB: Prisma fetches requested records
+        DB-->>B: Returns SQL rows
+        B-->>F: Returns formatted JSON response
+        F->>U: Renders Tailwind UI components
+    end

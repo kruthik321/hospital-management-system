@@ -1,0 +1,63 @@
+flowchart TD
+    classDef level fill:#f0f8ff,stroke:#0288d1,stroke-width:2px;
+    classDef ext fill:#e1f5fe,stroke:#0288d1,stroke-width:1px;
+    classDef concept fill:#e8f5e9,stroke:#2e7d32,stroke-width:1px;
+    classDef intern fill:#fff3e0,stroke:#e65100,stroke-width:1px;
+    classDef label font-weight:bold,stroke:none,fill:none;
+
+    subgraph Users ["END USERS"]
+        direction LR
+        U1((Admin))
+        U2((Doctor))
+        U3((Nurse))
+        U4((Staff))
+        U5((Patient))
+    end
+    
+    subgraph External ["EXTERNAL LEVEL (User Views)"]
+        direction LR
+        V1["Admin View"]:::ext
+        V2["Doctor View"]:::ext
+        V3["Nurse View"]:::ext
+        V4["Staff View"]:::ext
+        V5["Patient View"]:::ext
+    end
+
+    U1 --> V1
+    U2 --> V2
+    U3 --> V3
+    U4 --> V4
+    U5 --> V5
+
+    subgraph Conceptual ["CONCEPTUAL LEVEL (Logical Database)"]
+        direction TB
+        CS["CONCEPTUAL SCHEMA"]:::concept
+        
+        subgraph Tables ["Entities & Attributes"]
+            direction LR
+            T1["Patients"]
+            T2["Appointments"]
+            T3["Prescriptions"]
+            T4["Billing"]
+            T5["Special Portals"]
+        end
+        CS --- Tables
+    end
+
+    V1 -.-> CS
+    V2 -.-> CS
+    V3 -.-> CS
+    V4 -.-> CS
+    V5 -.-> CS
+
+    subgraph Internal ["INTERNAL LEVEL (Physical Storage)"]
+        direction TB
+        IS["INTERNAL SCHEMA"]:::intern
+        DB[("STORED DATABASE<br>(PostgreSQL 18)")]:::intern
+        Files["Data Files / Indexes / Logs"]:::intern
+        
+        IS --> DB
+        DB -.- Files
+    end
+
+    Tables ==> IS
