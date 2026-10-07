@@ -23,3 +23,4 @@ Thumbs.db
 # Database backups and seed logs
 *_backup.sql
 seed_log.txt
+hospital_db_neon.sql
