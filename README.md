@@ -5,6 +5,18 @@ Designed for both **production deployment** and **Database Systems Lab Mini Proj
 
 ---
 
+## 🌐 Live Demo
+
+**Frontend:**  
+https://hospital-management-system-tan-ten.vercel.app/
+
+**Backend API:**  
+https://hospital-management-system-u2pu.onrender.com/
+
+> The backend is hosted on Render's free tier, so the first request after a period of inactivity may take a little longer while the service wakes up.
+
+---
+
 ## 🔧 Tech Stack
 
 | Layer | Technology |
@@ -69,7 +81,7 @@ project/
 
 ```bash
 # Install server dependencies
-cd project/server
+cd hospital-management-system/server
 npm install
 
 # Install client dependencies
